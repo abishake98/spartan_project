@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, abort
 import management
 
 import spartan
@@ -49,22 +49,24 @@ def spartan_add():
 def spartan_file_getter(spartan_id):
     management.load_from_json()
     print(all_spartan_dictionary)
-    spartan_object = all_spartan_dictionary[int(spartan_id)]
-    return spartan_object.__dict__
-
-
+    if int(spartan_id) in all_spartan_dictionary.keys():
+        spartan_object = all_spartan_dictionary[int(spartan_id)]
+        return spartan_object.__dict__
+    else:
+        abort(400, "WARNING: Spartan ID entered does not exist in the system")
 
 # POST to remove spartan
 @flask_object.route("/spartan/remove", methods = ["POST"])
 def spartan_file_remover():
     management.load_from_json()
     spartan_id = request.args.get("id")
-    del all_spartan_dictionary[int(spartan_id)]
-    print(all_spartan_dictionary)
-    management.save_to_json()
-    return f"The Spartan, with Spartan ID: {spartan_id}, has been successfully removed from the system"
-
-
+    if int(spartan_id) in all_spartan_dictionary.keys():
+        del all_spartan_dictionary[int(spartan_id)]
+        print(all_spartan_dictionary)
+        management.save_to_json()
+        return f"The Spartan, with Spartan ID: {spartan_id}, has been successfully removed from the system"
+    else:
+        abort(400, "WARNING: Spartan ID entered does not exist in the system")
 
 # GET to view spartan list
 @flask_object.route("/spartan", methods = ["GET"])
@@ -77,9 +79,6 @@ def all_spartan_file_getter():
         spartan_dict = spartan_obj.__dict__
         temp_dict_of_dict[spartan_id] = spartan_dict
     return temp_dict_of_dict
-
-
-
 
 if __name__ == "__main__":
 
