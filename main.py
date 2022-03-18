@@ -40,7 +40,7 @@ def spartan_add():
 
     management.save_to_json()
 
-    return f"The Spartan Details ({spartan_id}: {first_name} {last_name}) will be added to the database, which is as follows:\nSpartan ID: {spartan_id} - Spartan's Full Name: {first_name} {last_name} - Spartan's DoB: {birth_day}/{birth_month}/{birth_year} - Spartan's Course: {course} - Spartan's Stream: {stream}"
+    return f"The Spartan, {first_name} {last_name}, with Spartan ID: {spartan_id} will be added to the database."
 
 
 
@@ -62,7 +62,7 @@ def spartan_file_remover():
     del all_spartan_dictionary[int(spartan_id)]
     print(all_spartan_dictionary)
     management.save_to_json()
-    return "Done"
+    return f"The Spartan, with Spartan ID: {spartan_id}, has been successfully removed from the system"
 
 
 
