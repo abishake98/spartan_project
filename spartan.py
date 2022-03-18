@@ -1,3 +1,4 @@
+from flask import abort
 
 class Spartan:
 
@@ -19,7 +20,7 @@ class Spartan:
             self.spartan_id = new_spartan_id
             print(f"Spartan's ID is {self.spartan_id}")
         else:
-            return print("The Spartan ID is Invalid")
+            abort(400, "Spartan ID has to be greater than 0")
 
     def get_first_name(self):
         return self.first_name
@@ -29,7 +30,7 @@ class Spartan:
             self.first_name = new_first_name
             print(f"Spartan's First Name is {self.first_name}")
         else:
-            return print("Spartan's First Name is Invalid")
+            abort(400, "Spartan's First Name has to be at least 2 characters")
 
     def get_last_name(self):
         return self.last_name
@@ -39,7 +40,7 @@ class Spartan:
             self.last_name = new_last_name
             print(f"Spartan's Last Name is {self.last_name}")
         else:
-            return print("Spartan's Last Name is Invalid")
+            abort(400, "Spartan's Last Name has to be at least 2 characters")
 
     def get_birth_day(self):
         return self.birth_day
@@ -49,7 +50,7 @@ class Spartan:
             self.birth_day = new_birth_day
             print(f"Spartan's Day of Birth is {self.birth_day}")
         else:
-            return print("Spartan's Day of Birth is Invalid")
+            abort(400, "Spartan's Day of Birth has to be in between 1 and 31")
 
     def get_birth_month(self):
         return self.birth_month
@@ -59,7 +60,7 @@ class Spartan:
             self.birth_month = new_birth_month
             print(f"Spartan's Month of Birth is {self.birth_month}")
         else:
-            return print("Spartan's Month of Birth is Invalid")
+            abort(400, "Spartan's Month of Birth has to be in between 1 and 12")
 
     def get_birth_year(self):
         return self.birth_year
@@ -69,7 +70,7 @@ class Spartan:
             self.birth_year = new_birth_year
             print(f"Spartan's Month of Year is {self.birth_year}")
         else:
-            return print("Spartan's Year of Birth is Invalid")
+            abort(400, "Spartan's Year of Birth has to be in between 1900 and 2004")
 
     def get_course(self):
         return self.course
@@ -80,7 +81,7 @@ class Spartan:
             print(f"Spartan's Course is {self.course}")
 
         else:
-            return print("Spartan's Course is Invalid")
+            abort(400, "Spartan's Course cannot be left blank")
 
     def get_stream(self):
         return self.stream
@@ -90,7 +91,7 @@ class Spartan:
             self.stream = new_stream
             print(f"Spartan's Stream is {self.stream}")
         else:
-            return print("Spartan's Stream is Invalid")
+            abort(400, "Spartan's Stream cannot be left blank")
 
     def print_spartan_data(self):
         spartan = {"Spartan ID" : self.spartan_id,
