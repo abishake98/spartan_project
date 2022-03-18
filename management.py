@@ -1,6 +1,8 @@
 import spartan
 import json
 
+all_spartan_dictionary = {}
+
 def read_main_option():
     print("What would you like to do? ")
     print("-----------------------------------------")
@@ -49,6 +51,7 @@ def read_update_option():
 
 def save_to_json():
     temp_dict_of_dict = {}
+
     for spartan_id in all_spartan_dictionary:
         spartan_obj = all_spartan_dictionary[spartan_id]
         spartan_dict = spartan_obj.__dict__
@@ -58,8 +61,8 @@ def save_to_json():
         json.dump(temp_dict_of_dict, spartan_file, indent= 8)
 
 def load_from_json():
-    global all_spartan_dictionary
     temp_dict_of_dict = {}
+
     try:
         with open("spartan.json", "r") as spartan_file:
             temp_dict_of_dict = json.load(spartan_file)
@@ -82,13 +85,35 @@ def load_from_json():
 
         all_spartan_dictionary[spartan_id] = spartan_obj
 
+def add_spartan():
+    while True:
+        spartan_id = spartan.read_spartan_id()
+        if spartan_id in all_spartan_dictionary.keys():
+            print("WARNING: Spartan ID Already Exists")
+        else:
+            break
+    first_name = spartan.read_first_name()
+    last_name = spartan.read_last_name()
+    birth_day = spartan.read_birth_day()
+    birth_month = spartan.read_birth_month()
+    birth_year = spartan.read_birth_year()
+    course = spartan.read_course()
+    stream = spartan.read_stream()
+
+    spartan_object = spartan.Spartan(spartan_id, first_name, last_name, birth_day, birth_month, birth_year, course,
+                                     stream)
+
+    all_spartan_dictionary[spartan_id] = spartan_object
+
+    save_to_json()
+
 if __name__ == "__main__":
 
     print("---------------------------------------------------------")
     print("WELCOME TO THE SPARTA GLOBAL'S EMPLOYEE MANAGEMENT SYSTEM")
     print("---------------------------------------------------------")
 
-    all_spartan_dictionary = {}
+
     load_from_json()
 
     while True:
@@ -97,27 +122,11 @@ if __name__ == "__main__":
 
         if main_menu_option == "1":
 
-            while True:
-                spartan_id = spartan.read_spartan_id()
-                if spartan_id in all_spartan_dictionary.keys():
-                    print("WARNING: Spartan ID Already Exists")
-                else:
-                    break
-            first_name = spartan.read_first_name()
-            last_name = spartan.read_last_name()
-            birth_day = spartan.read_birth_day()
-            birth_month = spartan.read_birth_month()
-            birth_year = spartan.read_birth_year()
-            course = spartan.read_course()
-            stream = spartan.read_stream()
-
-            spartan_object = spartan.Spartan(spartan_id, first_name, last_name, birth_day, birth_month, birth_year, course, stream)
-
-            all_spartan_dictionary[spartan_id] = spartan_object
-
-            save_to_json()
+            add_spartan()
 
             print(all_spartan_dictionary)
+
+            print("Spartan has successfully been added to the system")
 
         elif main_menu_option == "2":
             if len(all_spartan_dictionary) == 0:
@@ -132,6 +141,8 @@ if __name__ == "__main__":
                         print("WARNING: Spartan ID entered doesn't exist in the system")
 
                 del all_spartan_dictionary[spartan_id_remove]
+
+                print("Spartan has successfully been removed from the system")
 
                 save_to_json()
 
@@ -164,5 +175,3 @@ if __name__ == "__main__":
 
         else:
             print("Invalid Option! Please Try Again")
-
-
